@@ -12,8 +12,8 @@ This TypeScript NPM package boilerplate is designed to kickstart the development
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/your-package-name.git
-cd your-package-name
+git clone https://github.com/nicholascostadev /typed-local-storage.git
+cd typed-local-storage
 ```
 
 2. Install dependencies:
@@ -36,11 +36,11 @@ This package provides type-safe localStorage utilities with Zod schema validatio
 ### Installation
 
 ```bash
-npm install your-package-name
+npm install @nicholascostadev/typed-local-storage
 # or
-pnpm add your-package-name
+pnpm add @nicholascostadev/typed-local-storage
 # or
-yarn add your-package-name
+yarn add @nicholascostadev/typed-local-storage
 ```
 
 ### Usage
@@ -49,18 +49,14 @@ yarn add your-package-name
 
 ```typescript
 import { z } from 'zod';
-import { defineGetterAndSetter } from 'your-package-name';
+import { defineGetterAndSetter } from '@nicholascostadev/typed-local-storage';
 
-// Define a schema for your data
-const userSchema = z.object({
-  name: z.string(),
-  age: z.number(),
-});
-
-// Using defineGetterAndSetter
 const userStorage = defineGetterAndSetter({
   key: 'user',
-  schema: userSchema,
+  schema:  z.object({
+    name: z.string(),
+    age: z.number(),
+  }),
   defaultValue: { name: 'John', age: 30 },
   isJson: true,
 });
@@ -73,26 +69,33 @@ const themeStorage = defineGetterAndSetter({
 
 // Get user data
 const userData = userStorage.get();
+//   ^? { name: string; age: number }
 
 // Set user data
 userStorage.set({ name: 'Jane', age: 25 });
-
+//              ^? param typed as { name: string; age: number }
 // Get theme
 const theme = themeStorage.get();
+//   ^? 'light' | 'dark'
 
 // Set theme
 themeStorage.set('dark');
-
+//              ^? param typed as 'dark' | 'light'
 ```
 
 You can also create a single source of data by creating a single typedLocalStorage object(my preferred way), e.g:
 
 ```typescript
+import { z } from 'zod';
+import { defineGetterAndSetter } from '@nicholascostadev/typed-local-storage';
 
 const typedLocalStorage = {
   user: defineGetterAndSetter({
     key: 'user',
-    schema: userSchema,
+    schema: z.object({
+      name: z.string(),
+      age: z.number(),
+    }),
     defaultValue: { name: 'John', age: 30 },
     isJson: true,
   }),
@@ -105,12 +108,18 @@ const typedLocalStorage = {
 
 // Get user data
 const userData = typedLocalStorage.user.get();
+//   ^? { name: string; age: number }
 
 // Set user data
 typedLocalStorage.user.set({ name: 'Jane', age: 25 });
-
+//              ^? param typed as { name: string; age: number }
 // Get theme
 const theme = typedLocalStorage.theme.get();
+//   ^? 'light' | 'dark'
+
+// Set theme
+typedLocalStorage.theme.set('dark');
+//              ^? param typed as 'dark' | 'light'
 ```
 
 You can also set a default value by `get` method in case you want to change the default value for this specific operation, e.g:
