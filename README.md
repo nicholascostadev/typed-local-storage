@@ -1,7 +1,3 @@
-# This package used the TS NPM Package Boilerplate (2025)
-
-This TypeScript NPM package boilerplate is designed to kickstart the development of TypeScript libraries for Node.js and the browser. It features a modern build setup with TypeScript, leveraging `tsup` for bundling and `@changesets/cli` for version management.
-
 ## Prerequisites
 
 - Node.js v22.5.1 (ensure you have this version by using `.nvmrc`)
