@@ -1,15 +1,15 @@
 {
-  "name": "ts-npm-package-boilerplate-2024",
+  "name": "@nicholascostadev/typed-local-storage",
   "type": "module",
-  "description": "TS NPM Package Boilerplate for 2024 ",
+  "description": "Interact with localStorage with type safety using Zod validation",
   "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simonorzel26/ts-npm-package-boilerplate-2024.git"
+    "url": "git+https://github.com/nicholascostadev/typed-local-storage.git"
   },
-  "homepage": "https://github.com/simonorzel26/ts-npm-package-boilerplate-2024",
+  "homepage": "https://github.com/nicholascostadev/typed-local-storage",
   "files": [
     "dist/**/*"
   ],
@@ -19,15 +19,19 @@
     "workflow:check": "biome check ./src",
     "release": "pnpm run build && changeset publish"
   },
-  "author": "Simon Orzel",
+  "author": "Nicholas Costa",
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@changesets/cli": "^2.27.7",
     "@total-typescript/tsconfig": "^1.0.4",
+    "@types/node": "^22.13.9",
     "typescript": "^5.5.3"
   },
   "bugs": {
-    "url": "https://github.com/simonorzel26/ts-npm-package-boilerplate-2024/issues"
+    "url": "https://github.com/nicholascostadev/typed-local-storage/issues"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
   }
 }

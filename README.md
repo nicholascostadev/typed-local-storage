@@ -1,15 +1,6 @@
+# This package used the TS NPM Package Boilerplate (2025)
 
-# TS NPM Package Boilerplate (2025)
-
-This TypeScript NPM package boilerplate is designed to kickstart the development of TypeScript libraries for Node.js and the browser. It features a modern build setup with TypeScript, leveraging `tsup` for bundling and `@changesets/cli` for version management. The package exports a simple function as an example to demonstrate the setup.
-
-## Features
-
-- TypeScript for type safety.
-- Biome for linting and formatting.
-- Dual package output (CommonJS and ESM) for compatibility.
-- Type definitions for TypeScript projects.
-- Automated build and release scripts.
+This TypeScript NPM package boilerplate is designed to kickstart the development of TypeScript libraries for Node.js and the browser. It features a modern build setup with TypeScript, leveraging `tsup` for bundling and `@changesets/cli` for version management.
 
 ## Prerequisites
 
@@ -17,96 +8,159 @@ This TypeScript NPM package boilerplate is designed to kickstart the development
 - `pnpm` (Follow [pnpm installation guide](https://pnpm.io/installation) if you haven't installed it)
 - [Biome](https://biomejs.dev/) for linting and formatting
 
-## Reuse
+## Development Setup
 
-### Step 1: Clone the Boilerplate Repository
-
-First, clone the existing repository `simonorzel26/npm-package-boilerplate-2025` to your local machine. This step involves copying all the files from the original repository.
-
+1. Clone the repository:
 ```bash
-git clone https://github.com/simonorzel26/npm-package-boilerplate-2025.git <your-new-repository-name>
-cd <your-new-repository-name>
+git clone https://github.com/yourusername/your-package-name.git
+cd your-package-name
 ```
 
-### Step 2: Remove the Existing Git History
-
-Since you're creating a new project, you'll likely want to start with a clean history:
-
-```bash
-rm -rf .git
-```
-
-This command removes the `.git` directory which contains all the git history of the original repository.
-
-### Step 3: Initialize a New Repository
-
-Now, initialize a new git repository:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit based on npm-package-boilerplate-2025"
-```
-
-### Step 4: Create a New Repository on GitHub
-
-Go to GitHub and create a new repository named `<your-new-repository-name>`. Do not initialize it with a README, .gitignore, or license since you are importing an existing project.
-
-### Step 5: Push to GitHub
-
-Link your local repository to the GitHub repository and push the changes:
-
-```bash
-git remote add origin https://github.com/<your-username>/<your-new-repository-name>.git
-git branch -M main
-git push -u origin main
-```
-
-Replace `<your-username>` with your GitHub username.
-
-## Installation
-
-To use this boilerplate for your project, clone the repository and install the dependencies.
-
+2. Install dependencies:
 ```bash
 pnpm install
 ```
 
-## Usage
-
-After installation, you can start using the boilerplate to build your TypeScript library. Here's how to import and use the example function exported by this package:
-
-```typescript
-import { foo } from 'your-package-name';
-
-console.log(foo('Hello, world!'));
+3. Available Scripts:
+```bash
+pnpm run dev    # Start development mode with watch
+pnpm run build  # Build the package
+pnpm run lint   # Run Biome linting
+pnpm run format # Format code with Biome
 ```
 
-## Development
+## Package Documentation
 
-This package includes several scripts to help with development:
+This package provides type-safe localStorage utilities with Zod schema validation. It includes two main functions: `getLocalStorageItem` and `defineGetterAndSetter`.
 
-- `pnpm run build`: Compiles the TypeScript source code and generates both CommonJS and ESM modules along with type definitions.
-- `pnpm run lint`: Runs TypeScript compiler checks without emitting code to ensure type safety.
-- `pnpm run release`: Bundles the package and publishes it to NPM with version management.
+### Installation
 
-### Adding New Functions
+```bash
+npm install your-package-name
+# or
+pnpm add your-package-name
+# or
+yarn add your-package-name
+```
 
-To add a new function, create a `.ts` file in the `src` directory. For example:
+### Usage
+
+#### Basic Example
 
 ```typescript
-// src/newFunction.ts
-export const newFunction = (): void => {
-  // Implementation here
+import { z } from 'zod';
+import { defineGetterAndSetter } from 'your-package-name';
+
+// Define a schema for your data
+const userSchema = z.object({
+  name: z.string(),
+  age: z.number(),
+});
+
+// Using defineGetterAndSetter
+const userStorage = defineGetterAndSetter({
+  key: 'user',
+  schema: userSchema,
+  defaultValue: { name: 'John', age: 30 },
+  isJson: true,
+});
+
+const themeStorage = defineGetterAndSetter({
+  key: 'theme',
+  schema: z.enum(['light', 'dark']),
+  defaultValue: 'light',
+});
+
+// Get user data
+const userData = userStorage.get();
+
+// Set user data
+userStorage.set({ name: 'Jane', age: 25 });
+
+// Get theme
+const theme = themeStorage.get();
+
+// Set theme
+themeStorage.set('dark');
+
+```
+
+You can also create a single source of data by creating a single typedLocalStorage object(my preferred way), e.g:
+
+```typescript
+
+const typedLocalStorage = {
+  user: defineGetterAndSetter({
+    key: 'user',
+    schema: userSchema,
+    defaultValue: { name: 'John', age: 30 },
+    isJson: true,
+  }),
+  theme: defineGetterAndSetter({
+    key: 'theme',
+    schema: z.enum(['light', 'dark']),
+    defaultValue: 'light',
+  }),
 };
+
+// Get user data
+const userData = typedLocalStorage.user.get();
+
+// Set user data
+typedLocalStorage.user.set({ name: 'Jane', age: 25 });
+
+// Get theme
+const theme = typedLocalStorage.theme.get();
 ```
 
-Then, export it from `index.ts`:
+You can also set a default value by `get` method in case you want to change the default value for this specific operation, e.g:
 
 ```typescript
-// src/index.ts
-export * from './newFunction';
+const userData = typedLocalStorage.user.get({ defaultValue: { name: 'John', age: 30 } });
 ```
+
+### API Reference
+
+#### `getLocalStorageItem`
+
+It's only used internally, but you can use it too if you'd like. It essentially get's the item from localStorage and validates it with the provided Zod schema.
+
+Parameters:
+- `key`: The localStorage key to retrieve
+- `options.schema`: Zod schema for type validation
+- `options.defaultValue`: Default value if item doesn't exist or is invalid
+- `options.isJson`: Whether the stored value is JSON (default: false)
+
+#### `defineGetterAndSetter`
+
+Creates typed getter and setter functions for localStorage values.
+
+Parameters:
+- `options.key`: The localStorage key
+- `options.schema`: Zod schema for type validation
+- `options.defaultValue`: Default value if item doesn't exist or is invalid
+- `options.isJson`: Whether the value should be stored as JSON (default: false)
+
+Returns:
+- An object with `get` and `set` methods for managing the localStorage value
+
+### Features
+
+- Type-safe localStorage operations
+- Zod schema validation
+- JSON parsing/stringifying support
+- Default value fallback
+- Error handling with console logging
+- TypeScript support with full type inference
+
+### Error Handling
+
+The package includes built-in error handling:
+- Returns default value if localStorage item doesn't exist
+- Returns default value if parsing fails
+- Returns default value if schema validation fails
+- Logs errors to console for debugging in development mode
+- Automatically sets default value when errors occur
 
 ## Contributing
 
@@ -114,7 +168,7 @@ Contributions are welcome! Please submit a pull request or create an issue for a
 
 ## License
 
-This project is open-sourced under the MIT License. See the [LICENSE](https://github.com/simonorzel26/ts-npm-package-boilerplate-2025/blob/main/LICENSE) file for more details.
+This project is open-sourced under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Author
 
