@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "**"
+      - "!main"  # Don't run on pushes to main
   pull_request:
     branches:
       - main
