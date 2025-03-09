@@ -1,17 +1,9 @@
 name: Run Tests
 
 on:
-  # Run on manual trigger
-  workflow_dispatch:
-  # Run on schedule (weekly on Monday at 00:00 UTC)
-  schedule:
-    - cron: '0 0 * * 1'
-  # Run when test files are changed
-  push:
-    paths:
-      - 'src/**/*.test.ts'
-      - 'src/**/*.spec.ts'
-      - 'vitest.config.ts'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -37,7 +29,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests with coverage
         run: pnpm test:coverage
