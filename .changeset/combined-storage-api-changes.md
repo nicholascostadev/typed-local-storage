@@ -1,5 +1,5 @@
 ---
-"@nicholascostadev/typed-local-storage": major
+"@nicholascostadev/typed-local-storage": patch
 ---
 
 # Major Update: New API with Storage Adapters
