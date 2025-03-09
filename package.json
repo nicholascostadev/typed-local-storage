@@ -2,7 +2,7 @@
   "name": "@nicholascostadev/typed-local-storage",
   "type": "module",
   "description": "Type-safe storage utilities with Zod validation for multiple storage backends (localStorage, AsyncStorage, etc.)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
