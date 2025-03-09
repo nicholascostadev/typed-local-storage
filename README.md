@@ -288,42 +288,7 @@ The package includes built-in error handling:
 
 ## Contributing
 
-Contributions are welcome! Please submit a pull request or create an issue for any features, bug fixes, or improvements.
-
-## Prerequisites
-
-- Node.js v22.5.1 (ensure you have this version by using `.nvmrc`)
-- `pnpm` (Follow [pnpm installation guide](https://pnpm.io/installation) if you haven't installed it)
-- [Biome](https://biomejs.dev/) for linting and formatting
-
-## Development Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/nicholascostadev/typed-local-storage.git
-```
-
-2. Install dependencies:
-```bash
-pnpm install
-```
-
-3. Available Scripts:
-```bash
-pnpm run dev    # Start development mode with watch
-pnpm run build  # Build the package
-pnpm run check  # Run Biome linting
-pnpm run test   # Run tests with Vitest
-pnpm run test:coverage # Run tests with coverage report
-```
-
-## Continuous Integration
-
-This project uses GitHub Actions for continuous integration:
-
-- **CI Workflow**: Runs on every push and pull request to verify linting, build, and tests.
-- **Test Workflow**: Runs tests across multiple Node.js versions (18.x, 20.x, 22.x) and generates coverage reports.
-- **Publish Workflow**: Handles publishing to npm when changes are merged to the main branch.
+Contributions are welcome! Please check out the [Contributing Guide](CONTRIBUTING.md) for detailed instructions on how to contribute to this project.
 
 ## License
 
