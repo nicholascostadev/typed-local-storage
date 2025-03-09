@@ -1,8 +1,8 @@
 name: CI
 on:
-  push:
+  pull_request:
     branches:
-      - "**"
+      - main
 
 jobs:
   build:
@@ -17,5 +17,14 @@ jobs:
           node-version: 22.5.1
           cache: "pnpm"
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run workflow:check && pnpm run build
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Lint
+        run: pnpm run workflow:check
+      
+      - name: Build
+        run: pnpm run build
+      
+      - name: Test
+        run: pnpm run test
