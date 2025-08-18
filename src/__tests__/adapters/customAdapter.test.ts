@@ -449,7 +449,7 @@ describe("Custom Storage Adapters", () => {
 				cache: {
 					schema: z.object({
 						timestamp: z.number(),
-						data: z.record(z.unknown()),
+						data: z.record(z.string(), z.unknown()),
 					}),
 					defaultValue: {
 						timestamp: Date.now(),
