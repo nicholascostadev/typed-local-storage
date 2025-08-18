@@ -1,5 +1,11 @@
 # @nicholascostadev/typed-local-storage
 
+## 1.0.0
+
+### Major Changes
+
+- c8835b6: Updated library to use zod v4
+
 ## 0.0.4
 
 ### Patch Changes
